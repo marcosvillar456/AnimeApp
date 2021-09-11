@@ -3,7 +3,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStore, applyMiddleware } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
-
+import { More } from "./screens";
 import { Provider } from "react-redux";
 import thunk from "redux-thunk";
 import rootReducer from "./store/reducers";
@@ -24,6 +24,7 @@ export default function App() {
           initialRouteName={"MainLayout"}
         >
           <Stack.Screen name="MainLayout" component={Tabs} />
+          <Stack.Screen name="More" component={More} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

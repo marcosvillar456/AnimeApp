@@ -1,7 +1,8 @@
-const { GET_ANIMES_AIRING, GET_MANGAS_AIRING } = require("./actions");
+const { GET_ANIMES_AIRING, GET_MANGAS_AIRING, MORE } = require("./actions");
 const initialState = {
   Animes_Airing: [],
   Mangas_Airing: [],
+  Search: {},
 };
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -15,6 +16,12 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         Mangas_Airing: action.payload,
+      };
+    }
+    case MORE: {
+      return {
+        ...state,
+        Search: action.payload,
       };
     }
     default:

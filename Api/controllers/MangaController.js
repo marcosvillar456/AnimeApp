@@ -12,6 +12,7 @@ async function MangaAiring(req, res, next) {
       type: Manga.type,
       img: Manga.image_url,
       volumes: Manga.volumes,
+      source: "manga",
     });
   });
   res.send(Airing);

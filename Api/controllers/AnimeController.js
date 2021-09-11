@@ -11,6 +11,28 @@ function ordenar(array, fecha) {
   return restos;
 }
 
+async function Search(req, res, next) {
+  try {
+    const { source, id } = req.query;
+    const peticion = await axios.get(
+      `https://api.jikan.moe/v3/${source}/${id}`
+    );
+    const data = peticion.data;
+    res.json({
+      trailer: data.trailer_url,
+      img: data.image_url,
+      name: data.title,
+      type: data.type,
+      status: data.status,
+      rank: data.rank,
+      sinopsis: data.synopsis,
+    });
+  } catch (err) {
+    console.log(next(err));
+    return res.status(500).json(err);
+  }
+}
+
 async function AnimeAiring(req, res, next) {
   const dias = [
     "monday",
@@ -30,10 +52,12 @@ async function AnimeAiring(req, res, next) {
     diasOrdenado.map((dia) => {
       data[dia].map((Anime) => {
         Airing.push({
+          id: Anime.mal_id,
           title: Anime.title,
           type: Anime.type,
           img: Anime.image_url,
           episodes: Anime.episodes,
+          source: "anime",
         });
       });
     });
@@ -43,4 +67,4 @@ async function AnimeAiring(req, res, next) {
     return res.status(500).json(err);
   }
 }
-module.exports = { AnimeAiring };
+module.exports = { AnimeAiring, Search };

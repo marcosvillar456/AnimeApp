@@ -4,7 +4,9 @@ export const GET_MANGAS_AIRING = "GET_MANGAS_AIRING";
 export const MORE = "MORE";
 export function getAnimesAiring() {
   return async function (dispatch) {
-    const Animes = await axios.get("http://localhost:3010/anime/Airing");
+    const Animes = await axios.get(
+      "https://anime-back.herokuapp.com/anime/Airing"
+    );
 
     const json = await Animes.data;
     return dispatch({
@@ -16,7 +18,9 @@ export function getAnimesAiring() {
 
 export function getMangasAiring() {
   return async function (dispatch) {
-    const Animes = await axios.get("http://localhost:3010/mangas/Airing");
+    const Animes = await axios.get(
+      "https://anime-back.herokuapp.com/mangas/Airing"
+    );
     const json = await Animes.data;
     return dispatch({
       type: GET_MANGAS_AIRING,
@@ -28,7 +32,7 @@ export function getMangasAiring() {
 export function getMoreInfo(source, id) {
   return async function (dispatch) {
     const peticion = await axios.get(
-      `http://localhost:3010/search?source=${source}&id=${id}`
+      `https://anime-back.herokuapp.com/search?source=${source}&id=${id}`
     );
     const json = await peticion.data;
     return dispatch({

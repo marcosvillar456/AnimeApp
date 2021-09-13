@@ -39,7 +39,7 @@ async function Search(req, res, next) {
       });
     } else {
       const peticion = await axios.get(
-        `https://api.jikan.moe/v3/${source}?q=${id}`
+        `https://api.jikan.moe/v3/search/${source}?q=${id}`
       );
       const data = peticion.data;
       res.json({

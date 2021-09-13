@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { getMangasAiring } from "../store/actions";
-import { Card } from "../components";
+import { Card, Loading } from "../components";
 
 export default function Mangas(props) {
   const dispatch = useDispatch();
@@ -19,11 +19,9 @@ export default function Mangas(props) {
     dispatch(getMangasAiring());
   }
   return !Airing[0] ? (
-    <View>
-      <Text>Loading..</Text>
-    </View>
+    <Loading />
   ) : (
-    <ScrollView>
+    <View>
       <Animated.FlatList
         keyExtractor={(item, index) => index.toString()}
         data={Airing}
@@ -38,7 +36,7 @@ export default function Mangas(props) {
             }}
             onPress={() =>
               props.navigation.navigate("More", {
-                id: item.title,
+                id: item.id,
                 source: item.source,
               })
             }
@@ -47,6 +45,6 @@ export default function Mangas(props) {
           </TouchableOpacity>
         )}
       />
-    </ScrollView>
+    </View>
   );
 }

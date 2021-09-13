@@ -19,4 +19,30 @@ async function MangaAiring(req, res, next) {
   });
   res.send(Airing);
 }
-module.exports = { MangaAiring };
+async function SearchManga(req, res, next) {
+  try {
+    const { source, id } = req.query;
+    const peticion = await axios.get(
+      `https://api.jikan.moe/v3/${source}/${id}`
+    );
+    console.log(source, id);
+    const data = peticion.data;
+    res.json({
+      img: data.image_url,
+      name: data.title,
+      type: data.type,
+      status: data.publishing === false ? "finished" : "Airing",
+      rank: data.rank,
+      sinopsis: data.synopsis,
+      emitido: data.published.prop.from,
+      finalizado: data.published.to,
+      genres: data.genres.map((e) => {
+        return e.name;
+      }),
+    });
+  } catch (err) {
+    console.log(next(err));
+    return res.status(500).json(err);
+  }
+}
+module.exports = { MangaAiring, SearchManga };

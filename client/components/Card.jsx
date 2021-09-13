@@ -27,17 +27,18 @@ function Card({ anime }) {
         </View>
 
         <View
-          style={{
-            alignContent: "flex-start",
-            width: 70,
-            margin: 7,
-            zIndex: 10,
-            padding: 5,
-            backgroundColor: "white",
-            borderRadius: 13,
-          }}
+          style={{ alignSelf: "center", padding: 12, alignSelf: "flex-start" }}
         >
-          <Text>Type:{anime.type}</Text>
+          <Text
+            style={{
+              padding: 4,
+              zIndex: 10,
+              backgroundColor: "white",
+              borderRadius: 13,
+            }}
+          >
+            Type:{anime.type}
+          </Text>
         </View>
       </ImageBackground>
       <View

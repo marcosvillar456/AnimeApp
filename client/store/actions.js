@@ -29,10 +29,22 @@ export function getMangasAiring() {
   };
 }
 
-export function getMoreInfo(source, id) {
+export function getMoreInfoAnime(source, id) {
   return async function (dispatch) {
     const peticion = await axios.get(
-      `https://anime-back.herokuapp.com/search?source=${source}&id=${id}`
+      `https://anime-back.herokuapp.com/anime/search?source=${source}&id=${id}`
+    );
+    const json = await peticion.data;
+    return dispatch({
+      type: MORE,
+      payload: json,
+    });
+  };
+}
+export function getMoreInfoManga(source, id) {
+  return async function (dispatch) {
+    const peticion = await axios.get(
+      `https://anime-back.herokuapp.com/mangas/search?source=${source}&id=${id}`
     );
     const json = await peticion.data;
     return dispatch({

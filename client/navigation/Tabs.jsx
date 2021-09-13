@@ -7,7 +7,7 @@ const Tab = createBottomTabNavigator();
 
 export default function Tabs() {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator initialRouteName="Home">
       <Tab.Screen
         name="Animes"
         component={Animes}

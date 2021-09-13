@@ -1,16 +1,8 @@
 import * as React from "react";
-import {
-  View,
-  Text,
-  FlatList,
-  ImageBackground,
-  ScrollView,
-  TouchableOpacity,
-  Animated,
-} from "react-native";
+import { View, TouchableOpacity, Animated } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { getAnimesAiring } from "../store/actions";
-import { Card } from "../components";
+import { Card, Loading } from "../components";
 
 export default function Animes(props) {
   const dispatch = useDispatch();
@@ -21,9 +13,7 @@ export default function Animes(props) {
   }, []);
 
   return !Airing[0] ? (
-    <View>
-      <Text>Loading..</Text>
-    </View>
+    <Loading />
   ) : (
     <View>
       <Animated.FlatList

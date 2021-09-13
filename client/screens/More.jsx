@@ -1,43 +1,24 @@
 import React from "react";
-import {
-  Text,
-  View,
-  StyleSheet,
-  BackHandler,
-  Alert,
-  Image,
-  ScrollView,
-} from "react-native";
+import { Text, View, StyleSheet, Image, ScrollView } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
-import { getMoreInfo } from "../store/actions";
+import { Loading } from "../components";
+import { getMoreInfoManga, getMoreInfoAnime } from "../store/actions";
 
 function More(props) {
   const dispatch = useDispatch();
   const id = props.route.params.id;
   const source = props.route.params.source;
-  console.log(id, source);
+
   const Info = useSelector((state) => state.Search);
 
-  // function backAction() {
-  //   Alert.alert("Hold on!", "Are you sure you want to go back?", [
-  //     {
-  //       text: "Cancel",
-  //       onPress: () => null,
-  //       style: "cancel",
-  //     },
-  //     { text: "YES", onPress: () => props.navigation.navigate("Home") },
-  //   ]);
-  //   return true;
-  // }
-
   React.useEffect(() => {
-    dispatch(getMoreInfo(source, id));
+    source === "anime"
+      ? dispatch(getMoreInfoAnime(source, id))
+      : dispatch(getMoreInfoManga(source, id));
   }, []);
 
   return !Info.name ? (
-    <View>
-      <Text>Loading..</Text>
-    </View>
+    <Loading />
   ) : (
     <ScrollView>
       <View style={styles.containerAll}>
@@ -63,10 +44,7 @@ function More(props) {
             {Info.finalizado === null ? (
               <Text>Null</Text>
             ) : (
-              <Text>
-                {Info.finalizado.day}-{Info.finalizado.month}-
-                {Info.emitido.year}
-              </Text>
+              <Text>{Info.finalizado}</Text>
             )}
           </View>
           <View style={styles.box}>

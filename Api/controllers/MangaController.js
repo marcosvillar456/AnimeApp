@@ -8,6 +8,8 @@ async function MangaAiring(req, res, next) {
   const data = await peticion.data;
   data["top"].map((Manga) => {
     Airing.push({
+      id: Manga.mal_id,
+
       title: Manga.title,
       type: Manga.type,
       img: Manga.image_url,

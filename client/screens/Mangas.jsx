@@ -1,11 +1,20 @@
 import * as React from "react";
-import { View, Text, FlatList, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  ScrollView,
+  Animated,
+} from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { getMangasAiring } from "../store/actions";
 import { Card } from "../components";
-export default function Animes() {
+
+export default function Mangas(props) {
   const dispatch = useDispatch();
   const Airing = useSelector((state) => state.Mangas_Airing);
+  const scrollY = React.useRef(new Animated.Value(0)).current;
+
   if (!Airing[1]) {
     dispatch(getMangasAiring());
   }
@@ -15,19 +24,27 @@ export default function Animes() {
     </View>
   ) : (
     <ScrollView>
-      <FlatList
+      <Animated.FlatList
         keyExtractor={(item, index) => index.toString()}
         data={Airing}
+        onScroll={Animated.event(
+          [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+          { useNativeDriver: true }
+        )}
         renderItem={({ item }) => (
-          <View
+          <TouchableOpacity
             style={{
-              justifyContent: "center",
               alignItems: "center",
-              margin: 10,
             }}
+            onPress={() =>
+              props.navigation.navigate("More", {
+                id: item.title,
+                source: item.source,
+              })
+            }
           >
             <Card anime={item} />
-          </View>
+          </TouchableOpacity>
         )}
       />
     </ScrollView>

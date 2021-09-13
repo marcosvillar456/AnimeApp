@@ -3,33 +3,40 @@ import {
   View,
   Text,
   FlatList,
+  ImageBackground,
   ScrollView,
   TouchableOpacity,
+  Animated,
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { getAnimesAiring } from "../store/actions";
 import { Card } from "../components";
+
 export default function Animes(props) {
   const dispatch = useDispatch();
   const Airing = useSelector((state) => state.Animes_Airing);
-  if (!Airing[1]) {
+  const scrollY = React.useRef(new Animated.Value(0)).current;
+  React.useEffect(() => {
     dispatch(getAnimesAiring());
-  }
+  }, []);
+
   return !Airing[0] ? (
     <View>
       <Text>Loading..</Text>
     </View>
   ) : (
-    <ScrollView>
-      <FlatList
+    <View>
+      <Animated.FlatList
         keyExtractor={(item, index) => index.toString()}
         data={Airing}
+        onScroll={Animated.event(
+          [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+          { useNativeDriver: true }
+        )}
         renderItem={({ item }) => (
           <TouchableOpacity
             style={{
-              justifyContent: "center",
               alignItems: "center",
-              margin: 25,
             }}
             onPress={() =>
               props.navigation.navigate("More", {
@@ -42,6 +49,6 @@ export default function Animes(props) {
           </TouchableOpacity>
         )}
       />
-    </ScrollView>
+    </View>
   );
 }

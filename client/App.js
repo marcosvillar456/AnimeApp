@@ -1,4 +1,6 @@
 import * as React from "react";
+import { registerRootComponent } from "expo";
+
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStore, applyMiddleware } from "redux";
@@ -30,3 +32,4 @@ export default function App() {
     </Provider>
   );
 }
+registerRootComponent(App);
